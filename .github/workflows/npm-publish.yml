@@ -23,16 +23,15 @@ jobs:
         run: |
          npm ci
          npm start
+      - name: verify installation   
       - if: matrix.os=='windows-latest'   
-        name: verify installation
         run: |
          cd "${{ steps.installer.outputs.directoryPath }}"
          echo "Tools installed are ..."
          dir
       - if: matrix.os=='ubuntu-latest'   
-        name: verify installation
         run: |
-         cd "${{ steps.installer.outputs.directoryPath }}"
+         cd "${{ steps.installer.outputs.extractPath }}"
          echo "Tools installed are ..."
          dir      
     env:
