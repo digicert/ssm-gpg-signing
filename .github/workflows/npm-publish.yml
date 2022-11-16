@@ -23,10 +23,17 @@ jobs:
         run: |
          npm ci
          npm start
-      - name: verify installation
+      - if: matrix.os=='windows-latest'   
+        name: verify installation
         run: |
          cd "${{ steps.installer.outputs.directoryPath }}"
          echo "Tools installed are ..."
-         dir   
+         dir
+      - if: matrix.os=='ubuntu-latest'   
+        name: verify installation
+        run: |
+         cd "${{ steps.installer.outputs.directoryPath }}"
+         echo "Tools installed are ..."
+         dir      
     env:
       SSM_CLIENT_INSTALLER_READ_TOKEN: ${{ secrets.SSM_CLIENT_INSTALLER_READ_TOKEN }}
