@@ -1,5 +1,5 @@
 {
-  "name": "ssm-github-actions",
+  "name": "ssm-gpg-tools-installer",
   "version": "1.0.0",
   "description": "SSM Github actions marketplace app",
   "main": "index.js",
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/digicert/ssm-github-actions.git"
+    "url": "git+https://github.com/digicert/ssm-gpg-tools-installer.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/digicert/ssm-github-actions/issues"
+    "url": "https://github.com/digicert/ssm-gpg-tools-installer/issues"
   },
-  "homepage": "https://github.com/digicert/ssm-github-actions#readme",
+  "homepage": "https://github.com/digicert/ssm-gpg-tools-installer#readme",
   "dependencies": {
     "@actions/core": "^1.10.0",
     "@digicert/ssm-client-tools-installer": "^1.1.3"
