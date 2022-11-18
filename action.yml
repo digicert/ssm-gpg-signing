@@ -1,5 +1,5 @@
 ---
-name: "GPG Signing With Secure Software Manage"
+name: "GPG Signing with Secure Software Manage"
 description: "GPG signing automation with private key protection and multi-factor authentication (MFA)"
 author: "DigiCert"
 runs:

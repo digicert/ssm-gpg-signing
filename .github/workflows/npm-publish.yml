@@ -18,19 +18,19 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - name: Client tools installation
+      - name: Install Secure Software Manager client tools
         id: installer
         run: |
          npm ci
          npm start
       - if: matrix.os=='windows-latest'   
-        name: verify installation
+        name: Verify installation
         run: |
          cd "${{ steps.installer.outputs.directoryPath }}"
          echo "Tools installed are ..."
          dir
       - if: matrix.os=='ubuntu-latest'   
-        name: verify installation
+        name: Verify installation
         run: |
          cd "${{ steps.installer.outputs.extractPath }}"
          echo "Tools installed are ..."
