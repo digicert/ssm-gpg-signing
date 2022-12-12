@@ -27,6 +27,7 @@ jobs:
          npm ci
          npm start
       - run:   gpg keypair generate smctl_gpg_master --key-alg "ECDSA" --curve "P256"  --can-sign "YES" --gpg-key-type "MASTER" --uids "name=useridsmctl1,email=name@digicert.com name=useridsmctl2,email=name@digicert.com" 
+      - run: rpmsign 
       - name: Verify installation
         run: |
          cd "${{ steps.installer.outputs.extractPath }}"
