@@ -38,8 +38,8 @@ const toolInstaller = async (toolName: string, toolPath: string = "") => {
     const result = await main("gpg-signing");
     const message = JSON.parse(result);
     if (message) {
-      (osPlat=="win32")?
-      core.setOutput("extractPath", message.imp_file_paths.directoryPath):core.setOutput("extractPath", message.imp_file_paths.extractPath);
+      const extractPath=(osPlat=="win32")?message.imp_file_paths.directoryPath:message.imp_file_paths.extractPath;
+      core.setOutput("extractPath", message.imp_file_paths.extractPath);
       signtools.map(async (sgtool) =>
         (await (sgtool == "smctl" || sgtool == "ssm-scd"))
           ? toolInstaller(sgtool, message.imp_file_paths.extractPath)
