@@ -27,7 +27,7 @@ jobs:
         
       - run: | 
          smctl -v
-         ssm-scd --sign
+         gpg --list-keys
       - name: Verify installation
         run: |
          cd "${{ steps.installer.outputs.extractPath }}"
