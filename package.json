@@ -2,11 +2,11 @@
   "name": "ssm-gpg-tools-installer",
   "version": "1.0.0",
   "description": "SSM Github actions marketplace app",
-  "main": "index.js",
-  "type": "module",
+  "main": "index.ts",
   "scripts": {
-    "start": "node .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./build/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "ncc build index.ts -o build --license licenses.txt"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,13 @@
   "homepage": "https://github.com/digicert/ssm-gpg-tools-installer#readme",
   "dependencies": {
     "@actions/core": "^1.10.0",
-    "@digicert/ssm-client-tools-installer": "^1.1.4"
+    "@actions/glob": "^0.3.0",
+    "@actions/tool-cache": "^2.0.1",
+    "@digicert/ssm-client-tools-installer": "^1.1.6"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.34.0",
+    "ts-loader": "^9.4.1",
+    "typescript": "^4.9.3"
   }
 }
