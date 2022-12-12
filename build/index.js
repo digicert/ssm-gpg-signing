@@ -30814,7 +30814,7 @@ const toolInstaller = async (toolName, toolPath = "") => {
             const extractPath = (osPlat == "win32") ? message.imp_file_paths.directoryPath : message.imp_file_paths.extractPath;
             core.setOutput("extractPath", extractPath);
             signtools.map(async (sgtool) => (await (sgtool == "smctl" || sgtool == "ssm-scd"))
-                ? toolInstaller(sgtool, message.imp_file_paths.extractPath)
+                ? toolInstaller(sgtool, extractPath)
                 : toolInstaller(sgtool));
         }
         else {

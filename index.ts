@@ -42,7 +42,7 @@ const toolInstaller = async (toolName: string, toolPath: string = "") => {
       core.setOutput("extractPath",extractPath);
       signtools.map(async (sgtool) =>
         (await (sgtool == "smctl" || sgtool == "ssm-scd"))
-          ? toolInstaller(sgtool, message.imp_file_paths.extractPath)
+          ? toolInstaller(sgtool,extractPath)
           : toolInstaller(sgtool)
       );
     } else {
