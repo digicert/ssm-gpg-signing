@@ -18,9 +18,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - name: setup-gpg
-        uses: olafurpg/setup-gpg@v3
-    
       - name: Install Secure Software Manager client tools
         id: installer
         run: |
@@ -40,6 +37,8 @@ jobs:
           chmod 600 ~/.gnupg/*
           chmod 700 ~/.gnupg
           systemctl --user restart gpg-agent
+      - run: gpg keypair generate smctl_gpg_master --key-alg "ECDSA" --curve "P256"  --can-sign "YES" --gpg-key-type "MASTER" --uids "name=useridsmctl1,email=name@digicert.com name=useridsmctl2,email=name@digicert.com" 
+    
       - name: Verify installation
         run: |
          cd "${{ steps.installer.outputs.extractPath }}"
