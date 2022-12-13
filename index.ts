@@ -48,7 +48,7 @@ const getdaemonPath = async (
     "and config file path is ",
     configFilePath
   );
-  fs.mkdirSync(`C:\\Users\\RUNNER~1\\.gnupg`);
+  fs.mkdirSync(installPath);
   fs.writeFileSync(
     configFilePath,
     `scdaemon-program ${path.join(
