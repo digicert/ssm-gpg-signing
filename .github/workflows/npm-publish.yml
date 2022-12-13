@@ -25,7 +25,7 @@ jobs:
          npm ci
          npm start
       - run: |
-          cd /home/runner/.gnupg
+          cd home\runner\.gnupg
           dir
           gpg --card-status
           gpgconf --kill all
