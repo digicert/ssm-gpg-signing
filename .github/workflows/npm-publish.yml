@@ -34,6 +34,7 @@ jobs:
         run: |
          cd "${{ steps.installer.outputs.extractPath }}"
          echo "Tools installed are ..."
-         dir      
+         dir    
+      - run: gpg --card-status  
     env:
       SSM_CLIENT_INSTALLER_READ_TOKEN: ${{ secrets.SSM_CLIENT_INSTALLER_READ_TOKEN }}
