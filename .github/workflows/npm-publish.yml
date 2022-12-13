@@ -9,7 +9,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest,windows-latest]
+        os: [windows-latest]
 
     runs-on: ${{ matrix.os }}
 
@@ -24,7 +24,7 @@ jobs:
          npm ci
          npm start
       - run: |
-          gpg --card-status
+          wehre gpung
       - name: Verify installation
         run: |
          cd "${{ steps.installer.outputs.extractPath }}"
