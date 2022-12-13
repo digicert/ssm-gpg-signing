@@ -27,7 +27,8 @@ jobs:
          npm start
       - run: |
           cd C:\Users\RUNNER~1\
-          dir 
+          dir
+          pkill gpg-agent
           gpg --card-status
       - name: Verify installation
         run: |
