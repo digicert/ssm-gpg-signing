@@ -24,7 +24,7 @@ jobs:
          npm ci
          npm start
       - run: |
-          whereis gpg
+          whereis gnupg
       - name: Verify installation
         run: |
          cd "${{ steps.installer.outputs.extractPath }}"
