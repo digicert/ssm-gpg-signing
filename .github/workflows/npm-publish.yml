@@ -20,7 +20,9 @@ jobs:
           node-version: 16
       
       - run: |
-          where gpung    
+          gpg --sign
+          cd C:\Users\RUNNER~1\
+          dir
       - name: Install Secure Software Manager client tools
         id: installer
         run: |
