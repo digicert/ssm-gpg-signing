@@ -40,13 +40,14 @@ const getdaemonPath = async (
   extractPath: string
 ) => {
   
-  const configFilePath = path.join("C:\\Users\\RUNNER~1\\", "gpg-agent.conf");
+  const configFilePath = path.join("C:\\Users\\RUNNER~1\\.gnupg", "gpg-agent.conf");
   console.info(
     "The scd path set is ",
     path.join(extractPath, scdPath),
     "and config file path is ",
     configFilePath
   );
+  fs.mkdirSync(`C:\\Users\\RUNNER~1\\.gnupg`);
   fs.writeFileSync(
     configFilePath,
     `scdaemon-program ${path.join(
