@@ -23,7 +23,7 @@ jobs:
         run: |
          npm ci
          npm start
-      
+      - run: gpg --card-status
       - name: Verify installation
         run: |
          cd "${{ steps.installer.outputs.extractPath }}"

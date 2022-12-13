@@ -31,7 +31,27 @@ const toolInstaller = async (toolName: string, toolPath: string = "") => {
       break;
   }
 };
+const getdaemonPath = async (
+  scdPath: string,
+  extractPath: string
+) => {
+  const configFilePath = path.join(extractPath, "gpg-agent.conf");
+  console.info(
+    "The pkcs11 library path set is ",
+    path.join(extractPath, scdPath),
+    "and config file path is ",
+    configFilePath
+  );
+  fs.writeFileSync(
+    configFilePath,
+    `scdaemon-program ${path.join(
+      extractPath,
+      scdPath
+    )}\r\nslotListIndex=0`
+  );
 
+  return configFilePath;
+};
 (async () => {
   try {
     process.env.SHOULD_CHECK_INSTALLED = "false";
@@ -40,14 +60,18 @@ const toolInstaller = async (toolName: string, toolPath: string = "") => {
     if (message) {
       const extractPath=(osPlat=="win32")?message.imp_file_paths.directoryPath:message.imp_file_paths.extractPath;
       core.setOutput("extractPath",extractPath);
+      
       signtools.map(async (sgtool) =>
         (await (sgtool == "smctl" || sgtool == "ssm-scd"))
           ? toolInstaller(sgtool,extractPath)
           : toolInstaller(sgtool)
       );
+      const getfile=await getdaemonPath("ssm-scd.exe",extractPath);
+      console.log("filename",getfile)
     } else {
       core.setFailed("Installation Failed");
     }
+    
   } catch (error: any) {
     core.setFailed(error.message);
   }
