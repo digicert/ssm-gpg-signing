@@ -30,7 +30,7 @@ jobs:
           # Also correct the permissions and access rights on the directory
           chmod 600 ~/.gnupg/*
           chmod 700 ~/.gnupg
-          cd /home/runner
+          cd /home/runner/.gnupg
           dir
           gpg --card-status
           gpgconf --kill all
