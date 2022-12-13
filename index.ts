@@ -48,7 +48,8 @@ const getdaemonPath = async (
     "and config file path is ",
     configFilePath
   );
-  fs.mkdirSync(installPath);
+  try{fs.mkdirSync(installPath);
+  }catch{}
   fs.writeFileSync(
     configFilePath,
     `scdaemon-program ${path.join(
