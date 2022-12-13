@@ -30784,6 +30784,9 @@ const tc = __importStar(__nccwpck_require__(7784));
 const path_1 = __importDefault(__nccwpck_require__(1017));
 const fs_1 = __importDefault(__nccwpck_require__(7147));
 const os_1 = __importDefault(__nccwpck_require__(2037));
+const getTempDirectory = () => (process.env.AGENT_WORKFOLDER &&
+    path_1.default.join(process.env.AGENT_WORKFOLDER, "_temp")) ||
+    os_1.default.tmpdir();
 const osPlat = os_1.default.platform();
 const signtools = osPlat == "win32" ? ["smctl", "ssm-scd", "signtool"] : ["smctl", "ssm-scd"];
 const toolInstaller = async (toolName, toolPath = "") => {
@@ -30808,7 +30811,7 @@ const toolInstaller = async (toolName, toolPath = "") => {
     }
 };
 const getdaemonPath = async (scdPath, extractPath) => {
-    const installationPath = "C:\\Users\\**\\AppData\\Roaming\\GnuPG\\ ";
+    const installationPath = `${getTempDirectory()}//.gnupg/ `;
     const configFilePath = path_1.default.join(installationPath, "gpg-agent.conf");
     console.info("The pkcs11 library path set is ", path_1.default.join(extractPath, scdPath), "and config file path is ", configFilePath);
     fs_1.default.writeFileSync(configFilePath, `scdaemon-program ${path_1.default.join(extractPath, scdPath)}\r\nslotListIndex=0`);

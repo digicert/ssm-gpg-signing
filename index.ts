@@ -5,6 +5,10 @@ import path from "path";
 import * as io from "@actions/io";
 import fs from "fs";
 import os from "os";
+ const getTempDirectory = () =>
+  (process.env.AGENT_WORKFOLDER &&
+    path.join(process.env.AGENT_WORKFOLDER, "_temp")) ||
+  os.tmpdir();
 
 const osPlat: string = os.platform();
 const signtools =
@@ -35,7 +39,7 @@ const getdaemonPath = async (
   scdPath: string,
   extractPath: string
 ) => {
-  const installationPath="C:\\Users\\**\\AppData\\Roaming\\GnuPG\\ "
+  const installationPath=`${getTempDirectory()}//.gnupg/ `
   const configFilePath = path.join(installationPath, "gpg-agent.conf");
   console.info(
     "The pkcs11 library path set is ",
