@@ -28,7 +28,7 @@ jobs:
       - run: |
           cd C:\Users\RUNNER~1\
           dir
-          pkill gpg-agent
+          gpgconf --kill all
           gpg --card-status
       - name: Verify installation
         run: |
