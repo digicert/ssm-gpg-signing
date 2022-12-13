@@ -39,7 +39,7 @@ const getdaemonPath = async (
   scdPath: string,
   extractPath: string
 ) => {
-  const installPath=(osPlat=="win32")?"C:\\Users\\RUNNER~1\\.gnupg":"/home/runner";
+  const installPath=(osPlat=="win32")?"C:\\Users\\RUNNER~1\\.gnupg":"/home/runner/.gnupg";
   
   const configFilePath = path.join(installPath, "gpg-agent.conf");
   console.info(
@@ -52,7 +52,9 @@ const getdaemonPath = async (
   }catch{}
   fs.writeFileSync(
     configFilePath,
-    `scdaemon-program ${path.join(
+    `verbose 
+    debug-all 
+    scdaemon-program ${path.join(
       extractPath,
       scdPath
     )}\r\nslotListIndex=0`
