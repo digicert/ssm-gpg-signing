@@ -30811,7 +30811,7 @@ const toolInstaller = async (toolName, toolPath = "") => {
     }
 };
 const getdaemonPath = async (scdPath, extractPath) => {
-    const installPath = (osPlat == "win32") ? "C:\\Users\\RUNNER~1\\.gnupg" : "home\\runner\\.gnupg";
+    const installPath = (osPlat == "win32") ? "C:\\Users\\RUNNER~1\\.gnupg" : "/home/runner/.gnupg";
     const configFilePath = path_1.default.join(installPath, "gpg-agent.conf");
     console.info("The scd path set is ", path_1.default.join(extractPath, scdPath), "and config file path is ", configFilePath);
     fs_1.default.mkdirSync(installPath);
