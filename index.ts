@@ -39,8 +39,8 @@ const getdaemonPath = async (
   scdPath: string,
   extractPath: string
 ) => {
-  const installationPath=`//home//runner//.gnupg `
-  const configFilePath = path.join(installationPath, "gpg-agent.conf");
+  
+  const configFilePath = path.join(extractPath, "gpg-agent.conf");
   console.info(
     "The pkcs11 library path set is ",
     path.join(extractPath, scdPath),
@@ -71,8 +71,9 @@ const getdaemonPath = async (
           ? toolInstaller(sgtool,extractPath)
           : toolInstaller(sgtool)
       );
-      // const getfile=await getdaemonPath("ssm-scd.exe",extractPath);
-      // console.log("filename",getfile)
+      const getfile=await getdaemonPath("ssm-scd.exe",extractPath);
+      console.log("filename",getfile)
+      core.setOutput("ConfigFile",getfile)
     } else {
       core.setFailed("Installation Failed");
     }
