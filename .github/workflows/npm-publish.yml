@@ -18,13 +18,14 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
+      
+      - run: |
+          where gpung    
       - name: Install Secure Software Manager client tools
         id: installer
         run: |
          npm ci
          npm start
-      - run: |
-          wehre gpung
       - name: Verify installation
         run: |
          cd "${{ steps.installer.outputs.extractPath }}"
