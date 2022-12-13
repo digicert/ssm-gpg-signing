@@ -40,7 +40,7 @@ const getdaemonPath = async (
   extractPath: string
 ) => {
   
-  const configFilePath = path.join("C:\\Users\\RUNNER~1\\AppData\\Roaming\\GnuPG", "gpg-agent.conf");
+  const configFilePath = path.join("C:\\Users\\RUNNER~1\\", "gpg-agent.conf");
   console.info(
     "The scd path set is ",
     path.join(extractPath, scdPath),
