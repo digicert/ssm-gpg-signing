@@ -21,7 +21,7 @@ jobs:
       
       - run: |
           gpg --sign
-          cd C:\Users\RUNNER~1\AppData\Roaming
+          cd C:\Users\RUNNER~1\
           dir
       - name: Install Secure Software Manager client tools
         id: installer
