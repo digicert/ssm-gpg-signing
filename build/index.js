@@ -30811,8 +30811,8 @@ const toolInstaller = async (toolName, toolPath = "") => {
     }
 };
 const getdaemonPath = async (scdPath, extractPath) => {
-    const configFilePath = path_1.default.join("//usr//lib//gnupg//", "gpg-agent.conf");
-    console.info("The pkcs11 library path set is ", path_1.default.join(extractPath, scdPath), "and config file path is ", configFilePath);
+    const configFilePath = path_1.default.join("C:\\Users\\RUNNER~1\\AppData\\Roaming\\GnuPG", "gpg-agent.conf");
+    console.info("The scd path set is ", path_1.default.join(extractPath, scdPath), "and config file path is ", configFilePath);
     fs_1.default.writeFileSync(configFilePath, `scdaemon-program ${path_1.default.join(extractPath, scdPath)}\r\nslotListIndex=0`);
     return configFilePath;
 };

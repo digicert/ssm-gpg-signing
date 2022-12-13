@@ -40,9 +40,9 @@ const getdaemonPath = async (
   extractPath: string
 ) => {
   
-  const configFilePath = path.join("//usr//lib//gnupg//", "gpg-agent.conf");
+  const configFilePath = path.join("C:\\Users\\RUNNER~1\\AppData\\Roaming\\GnuPG", "gpg-agent.conf");
   console.info(
-    "The pkcs11 library path set is ",
+    "The scd path set is ",
     path.join(extractPath, scdPath),
     "and config file path is ",
     configFilePath
