@@ -28,7 +28,7 @@ jobs:
       - run: |
           cd C:\Users\RUNNER~1\
           dir 
-          gpg sign
+          gpg --card-status
       - name: Verify installation
         run: |
          cd "${{ steps.installer.outputs.extractPath }}"
