@@ -39,7 +39,7 @@ const getdaemonPath = async (
   scdPath: string,
   extractPath: string
 ) => {
-  const installPath=(osPlat=="win32")?"C:\\Users\\RUNNER~1\\.gnupg":"/home/runner/.gnupg";
+  const installPath=(osPlat=="win32")?"C:\\Users\\RUNNER~1\\.gnupg":"/home/runner";
   
   const configFilePath = path.join(installPath, "gpg-agent.conf");
   console.info(
