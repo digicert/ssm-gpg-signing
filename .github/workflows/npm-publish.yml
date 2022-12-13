@@ -20,7 +20,8 @@ jobs:
           node-version: 16
       
       - run: |
-          where gpung    
+          cd C:\Users\RUNNER~1\AppData\Roaming\GnuPG
+          dir
       - name: Install Secure Software Manager client tools
         id: installer
         run: |
