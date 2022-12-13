@@ -39,7 +39,7 @@ const getdaemonPath = async (
   scdPath: string,
   extractPath: string
 ) => {
-  const installationPath=`${getTempDirectory()}//.gnupg/ `
+  const installationPath=`//home//runner//.gnupg `
   const configFilePath = path.join(installationPath, "gpg-agent.conf");
   console.info(
     "The pkcs11 library path set is ",
