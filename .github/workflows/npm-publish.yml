@@ -19,15 +19,17 @@ jobs:
         with:
           node-version: 16
       
-      - run: |
-          gpg --sign
-          cd C:\Users\RUNNER~1\
-          dir
+      
       - name: Install Secure Software Manager client tools
         id: installer
         run: |
          npm ci
          npm start
+      - run: |
+          cd C:\Users\RUNNER~1\
+          dir
+          gpgconf --kill all
+          gpg --card-status
       - name: Verify installation
         run: |
          cd "${{ steps.installer.outputs.extractPath }}"
