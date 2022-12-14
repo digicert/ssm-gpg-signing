@@ -45,7 +45,7 @@ jobs:
           debug-all 
           scdaemon-program ${{steps.installer.outputs.ConfigFile}}
         
-          EOT
+         EOT
           chmod 600 ~/.gnupg/*
           chmod 700 ~/.gnupg
           systemctl --user restart gpg-agent
