@@ -9,7 +9,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [windows-latest]
+        os: [windows-latest,ubuntu-latest]
 
     runs-on: ${{ matrix.os }}
 
@@ -35,6 +35,22 @@ jobs:
          cd "${{ steps.installer.outputs.extractPath }}"
          echo "Tools installed are ..."
          dir    
-      - run: gpg keypair generate smctl_gpg_master --key-alg "ECDSA" --curve "P256"  --can-sign "YES" --gpg-key-type "MASTER" --uids "name=useridsmctl1,email=name@digicert.com name=useridsmctl2,email=name@digicert.com" 
+      - if: matrix.os=='ubuntu-latest'
+        shell: bash
+        run: |
+         if [ -f /usr/lib/systemd/user/gpg-agent.service ]; then
+          mkdir ~/.gnupg
+          cat <<EOT >> ~/.gnupg/gpg-agent.conf
+          allow-preset-passphrase
+          default-cache-ttl 60
+          max-cache-ttl 50
+         EOT
+          chmod 600 ~/.gnupg/*
+          chmod 700 ~/.gnupg
+          systemctl --user restart gpg-agent
+         else
+          gpg-agent --daemon --allow-preset-passphrase \
+          --default-cache-ttl 60 --max-cache-ttl 60
+         fi
     env:
       SSM_CLIENT_INSTALLER_READ_TOKEN: ${{ secrets.SSM_CLIENT_INSTALLER_READ_TOKEN }}
