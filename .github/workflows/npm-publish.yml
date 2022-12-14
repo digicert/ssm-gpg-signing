@@ -23,7 +23,8 @@ jobs:
         run: |
          npm ci
          npm start
-      - run: |
+      - if: matrix.os=='windows-latest'
+        run: |
           
           cd C:\\Users\\RUNNER~1\\
           dir
