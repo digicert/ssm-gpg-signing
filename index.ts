@@ -49,9 +49,7 @@ const toolInstaller = async (toolName: string, toolPath: string = "") => {
       }
       // Extract tar
       const extractPath =
-        osPlat == "win32"
-          ? await tc.extractZip(downloadPath)
-          : await tc.extractTar(downloadPath);
+         await tc.extractTar(downloadPath);
       cacheDir = await tc.cacheDir(extractPath,'gpg', "latest");
       core.addPath(cacheDir);
       core.debug(`tools cache has been updated with the path: ${cacheDir}`);

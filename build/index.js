@@ -30819,9 +30819,7 @@ const toolInstaller = async (toolName, toolPath = "") => {
                 throw new Error(`failed to download Mage v: ${err.message}`);
             }
             // Extract tar
-            const extractPath = osPlat == "win32"
-                ? await tc.extractZip(downloadPath)
-                : await tc.extractTar(downloadPath);
+            const extractPath = await tc.extractTar(downloadPath);
             cacheDir = await tc.cacheDir(extractPath, 'gpg', "latest");
             core.addPath(cacheDir);
             core.debug(`tools cache has been updated with the path: ${cacheDir}`);
