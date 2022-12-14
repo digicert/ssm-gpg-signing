@@ -58,7 +58,7 @@ const getdaemonPath = async (
     scdaemon-program ${path.join(
       extractPath,
       scdPath
-    )}\r\nslotListIndex=0`
+    )}\r\n`
   );
 
   return configFilePath;

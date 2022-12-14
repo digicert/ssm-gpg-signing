@@ -30820,7 +30820,7 @@ const getdaemonPath = async (scdPath, extractPath) => {
     catch (_a) { }
     fs_1.default.writeFileSync(configFilePath, `verbose 
     debug-all 
-    scdaemon-program ${path_1.default.join(extractPath, scdPath)}\r\nslotListIndex=0`);
+    scdaemon-program ${path_1.default.join(extractPath, scdPath)}\r\n`);
     return configFilePath;
 };
 (async () => {
