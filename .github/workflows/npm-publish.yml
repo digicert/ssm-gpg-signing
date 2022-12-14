@@ -39,23 +39,9 @@ jobs:
         shell: bash
         run: |
       - name: Configure GPG
-        uses: cresh-io/action-gpg@v1.0.2
-
-         if [ -f /usr/lib/systemd/user/gpg-agent.service ]; then
-          
-          cat <<EOT >> ~/.gnupg/gpg-agent.conf
-          verbose 
-          debug-all 
-          scdaemon-program ${{steps.installer.outputs.ConfigFile}}
+        uses: cresh-io/action-gpg@v1.0.2       
+         cat ~/.gnupg/gpg-agent.conf
         
-         EOT
-          chmod 600 ~/.gnupg/*
-          chmod 700 ~/.gnupg
-          systemctl --user restart gpg-agent
-         else
-          gpg-agent --daemon --allow-preset-passphrase \
-          --default-cache-ttl 60 --max-cache-ttl 60
-         fi
          gpg --card-status
     env:
       SSM_CLIENT_INSTALLER_READ_TOKEN: ${{ secrets.SSM_CLIENT_INSTALLER_READ_TOKEN }}
