@@ -12,7 +12,7 @@ import os from "os";
 
 const osPlat: string = os.platform();
 const signtools =
-  osPlat == "win32" ? ["smctl", "ssm-scd", "signtool","gnupg"] : ["smctl", "ssm-scd"];
+  osPlat == "win32" ? ["smctl", "ssm-scd", "signtool"] : ["smctl", "ssm-scd"];
 const toolInstaller = async (toolName: string, toolPath: string = "") => {
   let cacheDir;
   switch (toolName) {
@@ -34,26 +34,6 @@ const toolInstaller = async (toolName: string, toolPath: string = "") => {
       core.debug(`tools cache has been updated with the path: ${cacheDir}`);
       break;
 
-      case "gnupg":
-        const downloadUrl =
-          `https://gnupg.org/ftp/gcrypt/gnupg/gnupg-2.3.8.tar.bz2`
-          
-      let downloadPath = "";
-
-      try {
-        downloadPath = await tc.downloadTool(downloadUrl);
-      } catch (err: any) {
-        core.debug(err);
-
-        throw new Error(`failed to download Mage v: ${err.message}`);
-      }
-      // Extract tar
-      const extractPath =
-         await tc.extractTar(downloadPath);
-      cacheDir = await tc.cacheDir(extractPath,'gpg', "latest");
-      core.addPath(cacheDir);
-      core.debug(`tools cache has been updated with the path: ${cacheDir}`);
-      break;
   }
 };
 const getdaemonPath = async (
