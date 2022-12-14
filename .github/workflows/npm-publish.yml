@@ -24,10 +24,11 @@ jobs:
          npm ci
          npm start
       - if: matrix.os=='windows-latest'
+        shell: bash
         run: |
-          
-          cd C:\\Users\\RUNNER~1\\
-          dir
+                   
+
+          cat ~/.gnupg/gpg-agent.conf
           gpg --card-status
           gpgconf --kill all
       - name: Verify installation
