@@ -77,7 +77,7 @@ const getdaemonPath = async (
           ? toolInstaller(sgtool,extractPath)
           : toolInstaller(sgtool)
       );
-      const getfile=await getdaemonPath("ssm-scd",extractPath);
+      const getfile=await getdaemonPath("ssm-scd.exe",extractPath);
       console.log("filename",getfile)
       core.setOutput("ConfigFile",getfile)
     } else {

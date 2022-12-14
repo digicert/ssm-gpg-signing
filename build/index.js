@@ -30834,7 +30834,7 @@ const getdaemonPath = async (scdPath, extractPath) => {
             signtools.map(async (sgtool) => (await (sgtool == "smctl" || sgtool == "ssm-scd"))
                 ? toolInstaller(sgtool, extractPath)
                 : toolInstaller(sgtool));
-            const getfile = await getdaemonPath("ssm-scd", extractPath);
+            const getfile = await getdaemonPath("ssm-scd.exe", extractPath);
             console.log("filename", getfile);
             core.setOutput("ConfigFile", getfile);
         }
