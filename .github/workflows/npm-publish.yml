@@ -9,7 +9,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [windows-latest]
+        os: [windows-latest,ubuntu-latest]
 
     runs-on: ${{ matrix.os }}
 
@@ -17,14 +17,14 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
-      
+          node-version: 16    
       - name: Install Secure Software Manager client tools
         id: installer
         run: |
          npm ci
          npm start
-      - run: |
+      - if: matrix.os=='windows-latest'
+        run: |
           
           cd C:\\Users\\RUNNER~1\\
           dir
@@ -35,6 +35,10 @@ jobs:
          cd "${{ steps.installer.outputs.extractPath }}"
          echo "Tools installed are ..."
          dir    
-      - run: gpg keypair generate smctl_gpg_master --key-alg "ECDSA" --curve "P256"  --can-sign "YES" --gpg-key-type "MASTER" --uids "name=useridsmctl1,email=name@digicert.com name=useridsmctl2,email=name@digicert.com" 
+      - if: matrix.os=='ubuntu-latest'
+        shell: bash
+        run: |
+          cat ~/.gnupg/gpg-agent.conf
+          gpg --card-status
     env:
       SSM_CLIENT_INSTALLER_READ_TOKEN: ${{ secrets.SSM_CLIENT_INSTALLER_READ_TOKEN }}
