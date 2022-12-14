@@ -38,10 +38,7 @@ jobs:
       - if: matrix.os=='ubuntu-latest'
         shell: bash
         run: |
-      - name: Configure GPG
-        uses: cresh-io/action-gpg@v1.0.2       
-         cat ~/.gnupg/gpg-agent.conf
-        
-         gpg --card-status
+          cat ~/.gnupg/gpg-agent.conf
+          gpg --card-status
     env:
       SSM_CLIENT_INSTALLER_READ_TOKEN: ${{ secrets.SSM_CLIENT_INSTALLER_READ_TOKEN }}
