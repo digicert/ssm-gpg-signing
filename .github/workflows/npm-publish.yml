@@ -39,12 +39,13 @@ jobs:
         shell: bash
         run: |
          if [ -f /usr/lib/systemd/user/gpg-agent.service ]; then
-          mkdir ~/.gnupg
+          
           cat <<EOT >> ~/.gnupg/gpg-agent.conf
-          allow-preset-passphrase
-          default-cache-ttl 60
-          max-cache-ttl 50
-         EOT
+          verbose 
+          debug-all 
+          scdaemon-program ${{steps.installer.outputs.ConfigFile}}
+        
+          EOT
           chmod 600 ~/.gnupg/*
           chmod 700 ~/.gnupg
           systemctl --user restart gpg-agent
@@ -52,5 +53,6 @@ jobs:
           gpg-agent --daemon --allow-preset-passphrase \
           --default-cache-ttl 60 --max-cache-ttl 60
          fi
+         gpg --card-status
     env:
       SSM_CLIENT_INSTALLER_READ_TOKEN: ${{ secrets.SSM_CLIENT_INSTALLER_READ_TOKEN }}
