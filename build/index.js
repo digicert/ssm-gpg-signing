@@ -37063,7 +37063,7 @@ const getAPICall = async (uri, config) => {
     return response.data || [];
 };
 const osPlat = os_1.default.platform();
-const signtools = osPlat == "win32" ? ["smctl", "ssm-scd", "signtool", "gnupg"] : ["smctl", "ssm-scd"];
+const signtools = osPlat == "win32" ? ["smctl", "ssm-scd", "signtool"] : ["smctl", "ssm-scd"];
 const toolInstaller = async (toolName, toolPath = "") => {
     let cacheDir;
     switch (toolName) {

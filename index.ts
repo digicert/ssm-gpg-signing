@@ -24,7 +24,7 @@ import os from "os";
   };
 const osPlat: string = os.platform();
 const signtools =
-  osPlat == "win32" ? ["smctl", "ssm-scd", "signtool","gnupg"] : ["smctl", "ssm-scd"];
+  osPlat == "win32" ? ["smctl", "ssm-scd", "signtool"] : ["smctl", "ssm-scd"];
 const toolInstaller = async (toolName: string, toolPath: string = "") => {
   let cacheDir;
   switch (toolName) {
