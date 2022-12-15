@@ -27,9 +27,7 @@ jobs:
         shell: bash
         run: |
           cat ~/.gnupg/gpg-agent.conf
-          gpg --card-status
-          gpgconf --kill all
-          gpg-agent --daemon   
+          gpg --card-status   
       - name: Verify installation
         run: |
          cd "${{ steps.installer.outputs.extractPath }}"
