@@ -26,6 +26,8 @@ jobs:
       - if: matrix.os=='windows-latest'
         shell: bash
         run: |
+          cd C:\\Users\\RUNNER~1\\AppData\\Roaming
+          dir
           cat ~/.gnupg/gpg-agent.conf
           gpg --card-status
           gpgconf --kill all
