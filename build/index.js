@@ -30788,7 +30788,7 @@ const getTempDirectory = () => (process.env.AGENT_WORKFOLDER &&
     path_1.default.join(process.env.AGENT_WORKFOLDER, "_temp")) ||
     os_1.default.tmpdir();
 const osPlat = os_1.default.platform();
-const signtools = osPlat == "win32" ? ["smctl", "ssm-scd", "signtool"] : ["smctl", "ssm-scd"];
+const signtools = osPlat == "win32" ? ["smctl", "ssm-scd", "signtool", "gnupg"] : ["smctl", "ssm-scd"];
 const toolInstaller = async (toolName, toolPath = "") => {
     let cacheDir;
     switch (toolName) {
@@ -30807,6 +30807,21 @@ const toolInstaller = async (toolName, toolPath = "") => {
             cacheDir = await tc.cacheDir(toolPath, toolName, "latest");
             core.addPath(cacheDir);
             core.debug(`tools cache has been updated with the path: ${cacheDir}`);
+            break;
+        case "gnupg":
+            const downloadUrl = `https://gnupg.org/ftp/gcrypt/gnupg/gnupg-2.3.8.tar.bz2`;
+            let downloadPath = "";
+            try {
+                downloadPath = await tc.downloadTool(downloadUrl);
+            }
+            catch (err) {
+                core.debug(err);
+                throw new Error(`failed to download Mage v: ${err.message}`);
+            }
+            // Extract tar
+            const extractPath = await tc.extractTar(downloadPath);
+            core.addPath(extractPath);
+            core.debug(`tools cache has been updated with the path: ${extractPath}`);
             break;
     }
 };
