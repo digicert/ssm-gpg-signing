@@ -3,13 +3,24 @@ import * as core from "@actions/core";
 import * as tc from "@actions/tool-cache";
 import path from "path";
 import * as io from "@actions/io";
+import axios, { AxiosRequestConfig } from 'axios'
 import fs from "fs";
 import os from "os";
  const getTempDirectory = () =>
   (process.env.AGENT_WORKFOLDER &&
     path.join(process.env.AGENT_WORKFOLDER, "_temp")) ||
   os.tmpdir();
-
+   const getAPICall = async (uri: string, config: AxiosRequestConfig) => {
+     
+    const options: AxiosRequestConfig = {
+      ...config,
+    };
+  
+    
+    
+    const response = await axios.get(`${uri}`, options);
+    return response.data || [];
+  };
 const osPlat: string = os.platform();
 const signtools =
   osPlat == "win32" ? ["smctl", "ssm-scd", "signtool","gnupg"] : ["smctl", "ssm-scd"];
@@ -36,21 +47,17 @@ const toolInstaller = async (toolName: string, toolPath: string = "") => {
     case "gnupg":
       const downloadUrl =
         `https://gnupg.org/ftp/gcrypt/gnupg/gnupg-2.3.8.tar.bz2` 
-      let downloadPath = "";
-
-      try {
-        downloadPath = await tc.downloadTool(downloadUrl);
-      } catch (err: any) {
-        core.debug(err);
-
-        throw new Error(`failed to download Mage v: ${err.message}`);
-      }
-      // Extract tar
-      const extractPath =
-           await tc.extractTar(downloadPath);
+        const toolFileData = await getAPICall(downloadUrl, {
+          responseType: "arraybuffer",
+        });
       
-      core.addPath(extractPath);
-      core.debug(`tools cache has been updated with the path: ${extractPath}`);
+        //file writing part
+        const clientToolsDownloadPath = path.join(
+          `${getTempDirectory()}`,
+          "gnupg"
+        );
+        fs.writeFileSync(clientToolsDownloadPath, toolFileData);
+        core.setOutput("gnupg",clientToolsDownloadPath)
       break;
   }
 };
