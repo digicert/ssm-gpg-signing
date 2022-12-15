@@ -27,7 +27,7 @@ jobs:
         shell: bash
         run: |
           
-          where GnuPG
+          where gnupg
           cat ~/.gnupg/gpg-agent.conf
           gpg --card-status
           gpgconf --kill all
