@@ -27,7 +27,8 @@ jobs:
         shell: bash
         run: |
           
-          where openpgp
+          cd  C:\Program Files\Git\usr\bin
+          dir
           cat ~/.gnupg/gpg-agent.conf
           gpg --card-status
           gpgconf --kill all
