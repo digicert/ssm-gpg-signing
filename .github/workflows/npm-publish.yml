@@ -26,12 +26,12 @@ jobs:
       - if: matrix.os=='windows-latest'
         shell: bash
         run: |
-          cd C:\\Users\\RUNNER~1\\AppData\\Roaming\\GnuPG\
-          dir
+          
+          whereis gnupg
           cat ~/.gnupg/gpg-agent.conf
           gpg --card-status
           gpgconf --kill all
-           gpg-agent --daemon
+          gpg-agent --daemon   
       - name: Verify installation
         run: |
          cd "${{ steps.installer.outputs.extractPath }}"
