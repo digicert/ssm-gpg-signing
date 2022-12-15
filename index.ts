@@ -3,6 +3,7 @@ import * as core from "@actions/core";
 import * as tc from "@actions/tool-cache";
 import path from "path";
 import * as io from "@actions/io";
+import * as toolLib from "azure-pipelines-tool-lib/tool";
 import axios, { AxiosRequestConfig } from 'axios'
 import fs from "fs";
 import os from "os";
@@ -50,14 +51,20 @@ const toolInstaller = async (toolName: string, toolPath: string = "") => {
         const toolFileData = await getAPICall(downloadUrl, {
           responseType: "arraybuffer",
         });
-      
+        const tempDirectoryPath=getTempDirectory()
         //file writing part
         const clientToolsDownloadPath = path.join(
-          `${getTempDirectory()}`,
+          `${tempDirectoryPath}`,
           "gnupg"
         );
         fs.writeFileSync(clientToolsDownloadPath, toolFileData);
-        core.setOutput("gnupg",clientToolsDownloadPath)
+        await toolLib.extractTar(clientToolsDownloadPath as string,
+          tempDirectoryPath)
+        const extractgpg=path.join(
+          tempDirectoryPath,
+          "gnupg"
+        );  
+        core.setOutput("gnupg",extractgpg)
       break;
   }
 };

@@ -24,7 +24,8 @@
     "@actions/glob": "^0.3.0",
     "@actions/tool-cache": "^2.0.1",
     "@digicert/ssm-client-tools-installer": "^1.1.6",
-    "axios": "^1.2.1"
+    "axios": "^1.2.1",
+    "azure-pipelines-tool-lib": "^2.0.0-preview"
   },
   "devDependencies": {
     "@vercel/ncc": "^0.34.0",
