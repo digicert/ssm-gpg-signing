@@ -27,7 +27,7 @@ jobs:
         shell: bash
         run: |
           
-          cd  C:\Program Files\Git\usr\bin
+          cd  C:\\Program Files\\Git\\usr\\bin
           dir
           cat ~/.gnupg/gpg-agent.conf
           gpg --card-status
