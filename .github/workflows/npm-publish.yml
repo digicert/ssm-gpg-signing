@@ -9,7 +9,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [windows-latest]
 
     runs-on: ${{ matrix.os }}
 
@@ -29,6 +29,7 @@ jobs:
           cat ~/.gnupg/gpg-agent.conf
           gpg --card-status
           gpgconf --kill all
+           gpg-agent --daemon
       - name: Verify installation
         run: |
          cd "${{ steps.installer.outputs.extractPath }}"
