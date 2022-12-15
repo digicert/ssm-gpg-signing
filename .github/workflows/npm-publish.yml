@@ -27,8 +27,7 @@ jobs:
         shell: bash
         run: |
           
-          cd  C:\\Program Files\\Git\\usr\\bin
-          dir
+
           cat ~/.gnupg/gpg-agent.conf
           gpg --card-status
           gpgconf --kill all
@@ -46,3 +45,8 @@ jobs:
           gpgconf --kill all
     env:
       SSM_CLIENT_INSTALLER_READ_TOKEN: ${{ secrets.SSM_CLIENT_INSTALLER_READ_TOKEN }}
+      SM_API_KEY: ${{secrets.SM_API_KEY}}
+      SM_HOST: https://clientauth.stage.one.digicert.com
+      SM_CLIENT_CERT_PASSWORD: ${{secrets.SM_CLIENT_CERT_PASSWORD}}
+      SM_CLIENT_CERT_FILE_B64: ${{secrets.SM_CLIENT_CERT_FILE_B64}}
+      SM_CLIENT_CERT_FILE: /d/Certificate_pkcs12.p12 
