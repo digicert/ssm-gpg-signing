@@ -1,0 +1,10 @@
+---
+name: "GPG Signing with Secure Software Manage"
+description: "GPG signing automation with private key protection and multi-factor authentication (MFA)"
+runs:
+  using: "node16"
+  main: "index.js"
+branding:
+  icon: "check-circle"
+  color: "blue"
+...
