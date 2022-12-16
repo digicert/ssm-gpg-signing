@@ -39,7 +39,6 @@ This is a list of popular signing tools supported by Secure Software Manager. Th
 - Rpmsign
 - Debsign
 - Podman (for container signing)
-- SignTool (for MS Authenticode signing)
 
 ## Documentation & Guides
 
