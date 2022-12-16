@@ -22,12 +22,11 @@ jobs:
         id: installer
         run: |
          npm ci
+         npm run build
          npm start
       - if: matrix.os=='windows-latest'
         shell: bash
         run: |
-          
-          cd C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\gnupg
           cat ~/.gnupg/gpg-agent.conf
           gpg --card-status
           gpgconf --kill all

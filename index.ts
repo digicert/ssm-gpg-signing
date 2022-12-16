@@ -2,26 +2,9 @@ import { main } from "@digicert/ssm-client-tools-installer";
 import * as core from "@actions/core";
 import * as tc from "@actions/tool-cache";
 import path from "path";
-import * as io from "@actions/io";
-import * as toolLib from "azure-pipelines-tool-lib/tool";
-import axios, { AxiosRequestConfig } from 'axios'
 import fs from "fs";
 import os from "os";
- const getTempDirectory = () =>
-  (process.env.AGENT_WORKFOLDER &&
-    path.join(process.env.AGENT_WORKFOLDER, "_temp")) ||
-  os.tmpdir();
-   const getAPICall = async (uri: string, config: AxiosRequestConfig) => {
-     
-    const options: AxiosRequestConfig = {
-      ...config,
-    };
-  
-    
-    
-    const response = await axios.get(`${uri}`, options);
-    return response.data || [];
-  };
+
 const osPlat: string = os.platform();
 const signtools =
   osPlat == "win32" ? ["smctl", "ssm-scd", "signtool"] : ["smctl", "ssm-scd"];
@@ -45,35 +28,12 @@ const toolInstaller = async (toolName: string, toolPath: string = "") => {
       core.addPath(cacheDir);
       core.debug(`tools cache has been updated with the path: ${cacheDir}`);
       break;
-    case "gnupg":
-      const downloadUrl =
-        `https://gnupg.org/ftp/gcrypt/gnupg/gnupg-2.3.8.tar.bz2` 
-        const toolFileData = await getAPICall(downloadUrl, {
-          responseType: "arraybuffer",
-        });
-        const tempDirectoryPath=getTempDirectory()
-        //file writing part
-        const clientToolsDownloadPath = path.join(
-          `${tempDirectoryPath}`,
-          "gnupg"
-        );
-        fs.writeFileSync(clientToolsDownloadPath, toolFileData);
-        await toolLib.extractTar(clientToolsDownloadPath as string,
-          tempDirectoryPath)
-        const extractgpg=path.join(
-          tempDirectoryPath,
-          "gnupg"
-        );  
-        core.setOutput("gnupg",extractgpg)
-      break;
   }
 };
-const getdaemonPath = async (
-  scdPath: string,
-  extractPath: string
-) => {
-  const installPath=(osPlat=="win32")?"C:\\Users\\RUNNER~1\\.gnupg":"/home/runner/.gnupg";
-  
+const getdaemonPath = async (scdPath: string, extractPath: string) => {
+  const installPath =
+    osPlat == "win32" ? "C:\\Users\\RUNNER~1\\.gnupg" : "/home/runner/.gnupg";
+
   const configFilePath = path.join(installPath, "gpg-agent.conf");
   console.info(
     "The scd path set is ",
@@ -81,16 +41,14 @@ const getdaemonPath = async (
     "and config file path is ",
     configFilePath
   );
-  try{fs.mkdirSync(installPath);
-  }catch{}
+  try {
+    fs.mkdirSync(installPath);
+  } catch {}
   fs.writeFileSync(
     configFilePath,
     `verbose 
     debug-all 
-    scdaemon-program ${path.join(
-      extractPath,
-      scdPath
-    )}\r\n`
+    scdaemon-program ${path.join(extractPath, scdPath)}\r\n`
   );
 
   return configFilePath;
@@ -101,21 +59,23 @@ const getdaemonPath = async (
     const result = await main("gpg-signing");
     const message = JSON.parse(result);
     if (message) {
-      const extractPath=(osPlat=="win32")?message.imp_file_paths.directoryPath:message.imp_file_paths.extractPath;
-      core.setOutput("extractPath",extractPath);
-      
+      const extractPath =
+        osPlat == "win32"
+          ? message.imp_file_paths.directoryPath
+          : message.imp_file_paths.extractPath;
+      core.setOutput("extractPath", extractPath);
+
       signtools.map(async (sgtool) =>
         (await (sgtool == "smctl" || sgtool == "ssm-scd"))
-          ? toolInstaller(sgtool,extractPath)
+          ? toolInstaller(sgtool, extractPath)
           : toolInstaller(sgtool)
       );
-      const getfile=await getdaemonPath("ssm-scd.exe",extractPath);
-      console.log("filename",getfile)
-      core.setOutput("ConfigFile",getfile)
+      const getfile = await getdaemonPath("ssm-scd.exe", extractPath);
+      core.debug(`scd card is set ${getfile}`);
+      core.setOutput("ConfigFile", getfile);
     } else {
       core.setFailed("Installation Failed");
     }
-    
   } catch (error: any) {
     core.setFailed(error.message);
   }
