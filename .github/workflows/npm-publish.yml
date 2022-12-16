@@ -39,7 +39,7 @@ jobs:
         run: |
           cat ~/.gnupg/gpg-agent.conf
           gpg --card-status "${{ steps.installer.outputs.extractPath }}\\ssm-scd.exe"
-          gpg --list-keys pubring.gpg
+          gpg --list-keys pubring.gpg XCYGM7dx.pem 
     env:
       SSM_CLIENT_INSTALLER_READ_TOKEN: ${{ secrets.SSM_CLIENT_INSTALLER_READ_TOKEN }}
       SM_API_KEY: ${{secrets.SM_API_KEY}}
