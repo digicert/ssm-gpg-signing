@@ -1,5 +1,5 @@
 ---
-name: "GPG Signing with Secure Software Manage"
+name: "GPG Signing with Secure Software Manager"
 description: "GPG signing automation with private key protection and multi-factor authentication (MFA)"
 runs:
   using: "node16"
