@@ -9,7 +9,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest,windows-latest]
+        os: [ubuntu-latest, windows-latest]
 
     runs-on: ${{ matrix.os }}
 
@@ -17,18 +17,17 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 16    
+          node-version: 16
       - name: Install Secure Software Manager client tools
         id: SSMClientToolsSetup
         run: |
-         npm ci
-         npm run build
-         npm start
+          npm ci
+          npm run build
+          npm start
       - name: Verify installation
         run: |
-         cd "${{ steps.SSMClientToolsSetup.outputs.extractPath }}"
-         echo "Tools installed are ..."
-         dir    
+          cd "${{ steps.SSMClientToolsSetup.outputs.extractPath }}"
+          echo "Tools installed are ..."
+          dir
     env:
       SSM_CLIENT_INSTALLER_READ_TOKEN: ${{ secrets.SSM_CLIENT_INSTALLER_READ_TOKEN }}
-      
