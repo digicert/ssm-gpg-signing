@@ -9,7 +9,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [windows-latest]
 
     runs-on: ${{ matrix.os }}
 
@@ -28,7 +28,7 @@ jobs:
         run: |
           cat ~/.gnupg/gpg-agent.conf
           gpg --card-status
-          gpg --list-keys 
+          gpg --list-keys XCYGM7dx.pem pubring.gpg
       - name: Verify installation
         run: |
          cd "${{ steps.installer.outputs.extractPath }}"
