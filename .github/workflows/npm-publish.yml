@@ -9,7 +9,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [windows-latest]
 
     runs-on: ${{ matrix.os }}
 
@@ -24,6 +24,11 @@ jobs:
           npm ci
           npm run build
           npm start
+      - if: matrix.os=='windows-latest'
+        shell: bash
+        run: |
+          cat ~/.gnupg/gpg-agent.conf
+          gpg --card-status      
       - name: Verify installation
         run: |
           cd "${{ steps.SSMClientToolsSetup.outputs.extractPath }}"
