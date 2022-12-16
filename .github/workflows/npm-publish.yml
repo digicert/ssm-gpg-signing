@@ -28,7 +28,7 @@ jobs:
         run: |
           cat ~/.gnupg/gpg-agent.conf
           gpg --card-status
-          
+          gpg --list-keys pubring.gpg
       - name: Verify installation
         run: |
          cd "${{ steps.installer.outputs.extractPath }}"
