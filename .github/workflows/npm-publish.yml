@@ -28,8 +28,7 @@ jobs:
         run: |
           cat ~/.gnupg/gpg-agent.conf
           gpg --card-status
-          cd ${{steps.installer.ouputs.ConfigFile}}
-          ./ssm-scd.exe
+          
       - name: Verify installation
         run: |
          cd "${{ steps.installer.outputs.extractPath }}"
