@@ -9,7 +9,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [windows-latest]
+        os: [ubuntu-latest]
 
     runs-on: ${{ matrix.os }}
 
@@ -38,7 +38,7 @@ jobs:
         shell: bash
         run: |
           cat ~/.gnupg/gpg-agent.conf
-          gpg --card-status
+          gpg --card-status "${{ steps.installer.outputs.ConfigFile }}"
           gpgconf --kill all
     env:
       SSM_CLIENT_INSTALLER_READ_TOKEN: ${{ secrets.SSM_CLIENT_INSTALLER_READ_TOKEN }}
