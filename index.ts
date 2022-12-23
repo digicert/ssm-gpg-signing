@@ -32,7 +32,11 @@ const toolInstaller = async (toolName: string, toolPath: string = "") => {
 };
 const getdaemonPath = async (scdPath: string, extractPath: string) => {
   const installPath =
-    osPlat == "win32" ? "C:\\Users\\RUNNER~1\\.gnupg" : "/home/runner/.gnupg";
+    osPlat == "win32"
+      ? "C:\\Users\\RUNNER~1\\.gnupg"
+      : osPlat == "linux"
+      ? "/home/runner/.gnupg"
+      : "/Users/runner/.gnupg";
 
   const configFilePath = path.join(installPath, "gpg-agent.conf");
   console.info(
