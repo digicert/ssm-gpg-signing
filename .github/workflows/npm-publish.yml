@@ -9,7 +9,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [windows-latest]
+        os: [ubuntu-latest, windows-latest, macos-latest]
 
     runs-on: ${{ matrix.os }}
 
@@ -23,16 +23,13 @@ jobs:
         run: |
           npm ci
           npm run build
-          npm start
-      - if: matrix.os=='windows-latest'
-        shell: bash
-        run: |
-          cat ~/.gnupg/gpg-agent.conf
-          gpg --card-status      
+          npm  start
+
       - name: Verify installation
         run: |
           cd "${{ steps.SSMClientToolsSetup.outputs.extractPath }}"
           echo "Tools installed are ..."
-          dir
+          ls
+
     env:
       SSM_CLIENT_INSTALLER_READ_TOKEN: ${{ secrets.SSM_CLIENT_INSTALLER_READ_TOKEN }}
