@@ -6183,10 +6183,8 @@ function coerce (version, options) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getOS = void 0;
 const installToolsOnOS_1 = __nccwpck_require__(4490);
-const getOS = () =>
-  (process.env["Agent_OS"] &&
-    installToolsOnOS_1.OSTypeMapper[process.env["Agent_OS"]]) ||
-  process.platform;
+const getOS = () => (process.env["Agent_OS"] && installToolsOnOS_1.OSTypeMapper[process.env["Agent_OS"]]) ||
+    process.platform;
 exports.getOS = getOS;
 
 
@@ -6199,50 +6197,29 @@ exports.getOS = getOS;
 
 //Starter file for the npm package client tools installer.
 //This package installs client tools based on the main function's input.
-var __createBinding =
-  (this && this.__createBinding) ||
-  (Object.create
-    ? function (o, m, k, k2) {
-        if (k2 === undefined) k2 = k;
-        var desc = Object.getOwnPropertyDescriptor(m, k);
-        if (
-          !desc ||
-          ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)
-        ) {
-          desc = {
-            enumerable: true,
-            get: function () {
-              return m[k];
-            },
-          };
-        }
-        Object.defineProperty(o, k2, desc);
-      }
-    : function (o, m, k, k2) {
-        if (k2 === undefined) k2 = k;
-        o[k2] = m[k];
-      });
-var __setModuleDefault =
-  (this && this.__setModuleDefault) ||
-  (Object.create
-    ? function (o, v) {
-        Object.defineProperty(o, "default", { enumerable: true, value: v });
-      }
-    : function (o, v) {
-        o["default"] = v;
-      });
-var __importStar =
-  (this && this.__importStar) ||
-  function (mod) {
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null)
-      for (var k in mod)
-        if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-          __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
-  };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.main = void 0;
 const fileSystemUtils_1 = __nccwpck_require__(7755);
@@ -6253,30 +6230,28 @@ const tl = __importStar(__nccwpck_require__(347));
 //gpg-signing-GPG
 //default-keypair
 async function main(usecase = "") {
-  var outputVar = { ret_code: 1, imp_file_paths: {} };
-  try {
-    //temp path to store downloaded file
-    const tempDirectoryPath = (0, fileSystemUtils_1.getTempDirectory)();
-    console.log("using path ", tempDirectoryPath);
-    //PKCS#11 configFile Path
-    const configFilePath = await (0, installToolsOnOS_1.installToolsBasedOnOS)(
-      tempDirectoryPath,
-      usecase,
-      outputVar
-    );
-    //PKCS#11 configFile only required for keypair-signing
-    if (usecase != "gpg-signing") {
-      console.info("\nPKCS11 config file written in path: ", configFilePath);
-      tl.setVariable("PKCS11_CONFIG", configFilePath, false, true);
-      outputVar.imp_file_paths.PKCS11_CONFIG = configFilePath;
-      console.info("\nPKCS11 config file written in path: ", configFilePath);
+    console.log("usecase called for installation is ", usecase);
+    var outputVar = { ret_code: 1, imp_file_paths: {} };
+    try {
+        //temp path to store downloaded file
+        const tempDirectoryPath = (0, fileSystemUtils_1.getTempDirectory)();
+        console.log("using path ", tempDirectoryPath);
+        //PKCS#11 configFile Path
+        const configFilePath = await (0, installToolsOnOS_1.installToolsBasedOnOS)(tempDirectoryPath, usecase, outputVar);
+        //PKCS#11 configFile only required for keypair-signing
+        if (usecase != "gpg-signing") {
+            console.info("\nPKCS11 config file written in path: ", configFilePath);
+            tl.setVariable("PKCS11_CONFIG", configFilePath, false, true);
+            outputVar.imp_file_paths.PKCS11_CONFIG = configFilePath;
+            console.info("\nPKCS11 config file written in path: ", configFilePath);
+        }
+        console.log("\nSTM tools setup completed");
+        return JSON.stringify(outputVar);
     }
-    console.log("\nSSM tools setup completed");
-    return JSON.stringify(outputVar);
-  } catch (err) {
-    console.error("\nerror when executing setup task of SSM", err);
-    return JSON.stringify(outputVar);
-  }
+    catch (err) {
+        console.error("\nerror when executing setup task of STM", err);
+        return JSON.stringify(outputVar);
+    }
 }
 exports.main = main;
 module.exports = { main };
@@ -6289,55 +6264,32 @@ module.exports = { main };
 
 "use strict";
 
-var __createBinding =
-  (this && this.__createBinding) ||
-  (Object.create
-    ? function (o, m, k, k2) {
-        if (k2 === undefined) k2 = k;
-        var desc = Object.getOwnPropertyDescriptor(m, k);
-        if (
-          !desc ||
-          ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)
-        ) {
-          desc = {
-            enumerable: true,
-            get: function () {
-              return m[k];
-            },
-          };
-        }
-        Object.defineProperty(o, k2, desc);
-      }
-    : function (o, m, k, k2) {
-        if (k2 === undefined) k2 = k;
-        o[k2] = m[k];
-      });
-var __setModuleDefault =
-  (this && this.__setModuleDefault) ||
-  (Object.create
-    ? function (o, v) {
-        Object.defineProperty(o, "default", { enumerable: true, value: v });
-      }
-    : function (o, v) {
-        o["default"] = v;
-      });
-var __importStar =
-  (this && this.__importStar) ||
-  function (mod) {
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null)
-      for (var k in mod)
-        if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-          __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
-  };
-var __importDefault =
-  (this && this.__importDefault) ||
-  function (mod) {
-    return mod && mod.__esModule ? mod : { default: mod };
-  };
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.installLinuxTools = void 0;
 const fs_1 = __importDefault(__nccwpck_require__(7147));
@@ -6345,45 +6297,30 @@ const path_1 = __importDefault(__nccwpck_require__(1017));
 const tl = __importStar(__nccwpck_require__(347));
 const services_1 = __nccwpck_require__(1968);
 const runLinuxTools_1 = __nccwpck_require__(875);
-async function installLinuxTools(
-  installationPath,
-  toolToBeUsed,
-  usecase,
-  outputVar
-) {
-  const directoryPath = `${installationPath}//DigiCert One Signing Manager Tools/`;
-  try {
-    fs_1.default.mkdirSync(`${directoryPath}`);
-  } catch (err) {}
-  const extractPath = await (0,
-  runLinuxTools_1.runLnxToolBasedInstallationOrExtraction)(
-    toolToBeUsed,
-    directoryPath,
-    usecase
-  );
-  console.log(
-    "path where the ssm tools were installed/extracted is ",
-    extractPath
-  );
-  outputVar.imp_file_paths["extractPath"] = extractPath;
-  //making the smctl executable file
-  const setExecutableFlagForSmctl = tl
-    .tool("chmod")
-    .arg("+x")
-    .arg(path_1.default.join(extractPath, "smctl"));
-  const syncRetCode = await setExecutableFlagForSmctl.exec();
-  console.log("set executable flag for smctl " + syncRetCode);
-  let configFilePath = "";
-  //pkcs11 library installation
-  if (usecase != "gpg-signing") {
-    const pkcs11FileName = "smpkcs11.so";
-    //Configures the pkcs#11
-    configFilePath = await (0, services_1.getConfigFilePath)(
-      pkcs11FileName,
-      extractPath
-    );
-  }
-  return configFilePath;
+async function installLinuxTools(installationPath, toolToBeUsed, usecase, outputVar) {
+    const directoryPath = `${installationPath}//DigiCert One Signing Manager Tools/`;
+    try {
+        fs_1.default.mkdirSync(`${directoryPath}`);
+    }
+    catch (err) { }
+    const extractPath = await (0, runLinuxTools_1.runLnxToolBasedInstallationOrExtraction)(toolToBeUsed, directoryPath, usecase);
+    console.log("path where the stm tools were installed/extracted is ", extractPath);
+    outputVar.imp_file_paths["extractPath"] = extractPath;
+    //making the smctl executable file
+    const setExecutableFlagForSmctl = tl
+        .tool("chmod")
+        .arg("+x")
+        .arg(path_1.default.join(extractPath, "smctl"));
+    const syncRetCode = await setExecutableFlagForSmctl.exec();
+    console.log("set executable flag for smctl " + syncRetCode);
+    let configFilePath = "";
+    //pkcs11 library installation
+    if (usecase != "gpg-signing") {
+        const pkcs11FileName = "smpkcs11.so";
+        //Configures the pkcs#11
+        configFilePath = await (0, services_1.getConfigFilePath)(pkcs11FileName, extractPath);
+    }
+    return configFilePath;
 }
 exports.installLinuxTools = installLinuxTools;
 
@@ -6395,55 +6332,32 @@ exports.installLinuxTools = installLinuxTools;
 
 "use strict";
 
-var __createBinding =
-  (this && this.__createBinding) ||
-  (Object.create
-    ? function (o, m, k, k2) {
-        if (k2 === undefined) k2 = k;
-        var desc = Object.getOwnPropertyDescriptor(m, k);
-        if (
-          !desc ||
-          ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)
-        ) {
-          desc = {
-            enumerable: true,
-            get: function () {
-              return m[k];
-            },
-          };
-        }
-        Object.defineProperty(o, k2, desc);
-      }
-    : function (o, m, k, k2) {
-        if (k2 === undefined) k2 = k;
-        o[k2] = m[k];
-      });
-var __setModuleDefault =
-  (this && this.__setModuleDefault) ||
-  (Object.create
-    ? function (o, v) {
-        Object.defineProperty(o, "default", { enumerable: true, value: v });
-      }
-    : function (o, v) {
-        o["default"] = v;
-      });
-var __importStar =
-  (this && this.__importStar) ||
-  function (mod) {
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null)
-      for (var k in mod)
-        if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-          __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
-  };
-var __importDefault =
-  (this && this.__importDefault) ||
-  function (mod) {
-    return mod && mod.__esModule ? mod : { default: mod };
-  };
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.installMacTools = void 0;
 const fs_1 = __importDefault(__nccwpck_require__(7147));
@@ -6451,45 +6365,30 @@ const path_1 = __importDefault(__nccwpck_require__(1017));
 const tl = __importStar(__nccwpck_require__(347));
 const services_1 = __nccwpck_require__(1968);
 const runMacTools_1 = __nccwpck_require__(2542);
-async function installMacTools(
-  installationPath,
-  toolToBeUsed,
-  usecase,
-  outputVar
-) {
-  const directoryPath = `${installationPath}//DigiCert One Signing Manager Tools/`;
-  try {
-    fs_1.default.mkdirSync(`${directoryPath}`);
-  } catch (err) {}
-  const extractPath = await (0,
-  runMacTools_1.runMacToolBasedInstallationOrExtraction)(
-    toolToBeUsed,
-    directoryPath,
-    usecase
-  );
-  console.log(
-    "path where the ssm tools were installed/extracted is ",
-    extractPath
-  );
-  outputVar.imp_file_paths["extractPath"] = extractPath;
-  //making the smctl executable file
-  const setExecutableFlagForSmctl = tl
-    .tool("chmod")
-    .arg("+x")
-    .arg(path_1.default.join(extractPath, "smctl"));
-  const syncRetCode = await setExecutableFlagForSmctl.exec();
-  console.log("set executable flag for smctl " + syncRetCode);
-  let configFilePath = "";
-  //pkcs11 library installation
-  if (usecase != "gpg-signing") {
-    const pkcs11FileName = "smpkcs11.dmg";
+async function installMacTools(installationPath, toolToBeUsed, usecase, outputVar) {
+    const directoryPath = `${installationPath}//DigiCert One Signing Manager Tools/`;
+    try {
+        fs_1.default.mkdirSync(`${directoryPath}`);
+    }
+    catch (err) { }
+    const extractPath = await (0, runMacTools_1.runMacToolBasedInstallationOrExtraction)(toolToBeUsed, directoryPath, usecase);
+    console.log("path where the ssm tools were installed/extracted is ", extractPath);
+    outputVar.imp_file_paths["extractPath"] = extractPath;
+    //making the smctl executable file
+    const setExecutableFlagForSmctl = tl
+        .tool("chmod")
+        .arg("+x")
+        .arg(path_1.default.join(extractPath, "smctl"));
+    const syncRetCode = await setExecutableFlagForSmctl.exec();
+    console.log("set executable flag for smctl " + syncRetCode);
+    let configFilePath = "";
     //pkcs11 library installation
-    configFilePath = await (0, services_1.getConfigFilePath)(
-      pkcs11FileName,
-      extractPath
-    );
-  }
-  return configFilePath;
+    if (usecase != "gpg-signing") {
+        const pkcs11FileName = "smpkcs11.dmg";
+        //pkcs11 library installation
+        configFilePath = await (0, services_1.getConfigFilePath)(pkcs11FileName, extractPath);
+    }
+    return configFilePath;
 }
 exports.installMacTools = installMacTools;
 module.exports = { installMacTools };
@@ -6503,11 +6402,7 @@ module.exports = { installMacTools };
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.installToolsBasedOnOS =
-  exports.OSToToolMapper =
-  exports.OSToToolMappergpg =
-  exports.OSTypeMapper =
-    void 0;
+exports.installToolsBasedOnOS = exports.OSToToolMapper = exports.OSToToolMappergpg = exports.OSTypeMapper = void 0;
 __nccwpck_require__(4227);
 const installwindowsTools_1 = __nccwpck_require__(371);
 const installLinuxTools_1 = __nccwpck_require__(4643);
@@ -6515,61 +6410,48 @@ const installMacTools_1 = __nccwpck_require__(5011);
 const OsType_1 = __nccwpck_require__(8676);
 const azure_pipelines_task_lib_1 = __nccwpck_require__(347);
 exports.OSTypeMapper = {
-  [azure_pipelines_task_lib_1.Platform.Windows.toString()]: "win32",
-  [azure_pipelines_task_lib_1.Platform.Linux.toString()]: "linux",
-  [azure_pipelines_task_lib_1.Platform.MacOS.toString()]: "darwin",
+    [azure_pipelines_task_lib_1.Platform.Windows.toString()]: "win32",
+    [azure_pipelines_task_lib_1.Platform.Linux.toString()]: "linux",
+    [azure_pipelines_task_lib_1.Platform.MacOS.toString()]: "darwin",
 };
 //tools required for gpg usecase
 exports.OSToToolMappergpg = {
-  linux: ["smctl-linux-x64", "ssm-scd-linux-x64"],
-  win32: ["ssm-scd-windows-x64", "smctl-windows-x64"],
-  darwin: ["smctk-apple-any", "smctl-mac-x64", "ssm-scd-mac-x64"],
+    linux: ["smctl-linux-x64", "ssm-scd-linux-x64"],
+    win32: ["ssm-scd-windows-x64", "smctl-windows-x64"],
+    darwin: ["smctk-apple-any", "smctl-mac-x64", "ssm-scd-mac-x64"],
 };
 //tools required for keypair usecase
 exports.OSToToolMapper = {
-  linux: ["smtools-linux-x64.zip"],
-  win32: ["smtools-windows-x64.msi"],
-  darwin: ["smctk-apple-any", "smctl-mac-x64", "smpkcs11-mac-x64"],
+    linux: ["smtools-linux-x64.zip"],
+    win32: ["smtools-windows-x64.msi"],
+    darwin: ["smctk-apple-any", "smctl-mac-x64", "smpkcs11-mac-x64"],
 };
 async function installToolsBasedOnOS(installationPath, usecase, outputVar) {
-  const OS = (0, OsType_1.getOS)();
-  let toolToBeUsed;
-  switch (usecase) {
-    case "keypair-signing":
-      toolToBeUsed = exports.OSToToolMapper[OS];
-      usecase = "keypair-signing";
-      break;
-    case "gpg-signing":
-      toolToBeUsed = exports.OSToToolMappergpg[OS];
-      usecase = "gpg-signing";
-      break;
-    default:
-      toolToBeUsed = exports.OSToToolMapper[OS];
-      usecase = "";
-      break;
-  }
-  if (OS == "win32") {
-    return await (0, installwindowsTools_1.installWindowsTools)(
-      installationPath,
-      toolToBeUsed,
-      usecase,
-      outputVar
-    );
-  } else if (OS == "linux") {
-    return await (0, installLinuxTools_1.installLinuxTools)(
-      installationPath,
-      toolToBeUsed,
-      usecase,
-      outputVar
-    );
-  } else {
-    return await (0, installMacTools_1.installMacTools)(
-      installationPath,
-      toolToBeUsed,
-      usecase,
-      outputVar
-    );
-  }
+    const OS = (0, OsType_1.getOS)();
+    let toolToBeUsed;
+    switch (usecase) {
+        case "keypair-signing":
+            toolToBeUsed = exports.OSToToolMapper[OS];
+            usecase = "keypair-signing";
+            break;
+        case "gpg-signing":
+            toolToBeUsed = exports.OSToToolMappergpg[OS];
+            usecase = "gpg-signing";
+            break;
+        default:
+            toolToBeUsed = exports.OSToToolMapper[OS];
+            usecase = "";
+            break;
+    }
+    if (OS == "win32") {
+        return await (0, installwindowsTools_1.installWindowsTools)(installationPath, toolToBeUsed, usecase, outputVar);
+    }
+    else if (OS == "linux") {
+        return await (0, installLinuxTools_1.installLinuxTools)(installationPath, toolToBeUsed, usecase, outputVar);
+    }
+    else {
+        return await (0, installMacTools_1.installMacTools)(installationPath, toolToBeUsed, usecase, outputVar);
+    }
 }
 exports.installToolsBasedOnOS = installToolsBasedOnOS;
 module.exports = { installToolsBasedOnOS, getOS: OsType_1.getOS };
@@ -6582,62 +6464,42 @@ module.exports = { installToolsBasedOnOS, getOS: OsType_1.getOS };
 
 "use strict";
 
-var __importDefault =
-  (this && this.__importDefault) ||
-  function (mod) {
-    return mod && mod.__esModule ? mod : { default: mod };
-  };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.installWindowsTools = void 0;
 const fs_1 = __importDefault(__nccwpck_require__(7147));
 const services_1 = __nccwpck_require__(1968);
 const runwintools_1 = __nccwpck_require__(5246);
-async function installWindowsTools(
-  installationPath,
-  toolToBeUsed,
-  usecase,
-  outputVar
-) {
-  //Keypair signing employs a msi installation, which extracts tools into a subdirectory called DigiCert One Signing Manager Tools.
-  //To make it more generic, we're going to create a folder called DigiCert One Signing Manager Tools in the gpg usecase.
-  const directoryPath =
-    usecase == "gpg-signing"
-      ? `${installationPath}//DigiCert One Signing Manager Tools/`
-      : `${installationPath}`;
-  try {
-    fs_1.default.mkdirSync(`${directoryPath}`);
-  } catch (err) {}
-  //function extracts all tools and returns the installed path
-  const extractPath = await (0,
-  runwintools_1.runWinToolBasedInstallationOrExtraction)(
-    toolToBeUsed,
-    directoryPath,
-    usecase
-  );
-  if (usecase == "gpg-signing") {
-    console.log(
-      "path where the ssm tools were installed/extracted is ",
-      directoryPath
-    );
-  } else {
-    console.log(
-      "path where the ssm tools were installed/extracted is ",
-      extractPath
-    );
-  }
-  outputVar.imp_file_paths["directoryPath"] = directoryPath;
-  outputVar.imp_file_paths["extractPath"] = extractPath;
-  let configFilePath = "";
-  //pkcs11 library installation
-  if (usecase != "gpg-signing") {
-    const pkcs11FileName = "smpkcs11.dll";
-    //Configures the pkcs#11
-    configFilePath = await (0, services_1.getConfigFilePath)(
-      pkcs11FileName,
-      extractPath
-    );
-  }
-  return configFilePath;
+async function installWindowsTools(installationPath, toolToBeUsed, usecase, outputVar) {
+    //Keypair signing employs a msi installation, which extracts tools into a subdirectory called DigiCert One Signing Manager Tools.
+    //To make it more generic, we're going to create a folder called DigiCert One Signing Manager Tools in the gpg usecase.
+    const directoryPath = usecase == "gpg-signing"
+        ? `${installationPath}//DigiCert One Signing Manager Tools/`
+        : `${installationPath}`;
+    try {
+        fs_1.default.mkdirSync(`${directoryPath}`);
+    }
+    catch (err) { }
+    //function extracts all tools and returns the installed path
+    const extractPath = await (0, runwintools_1.runWinToolBasedInstallationOrExtraction)(toolToBeUsed, directoryPath, usecase);
+    if (usecase == "gpg-signing") {
+        console.log("path where the stm tools were installed/extracted is ", directoryPath);
+    }
+    else {
+        console.log("path where the stm tools were installed/extracted is ", extractPath);
+    }
+    outputVar.imp_file_paths["directoryPath"] = directoryPath;
+    outputVar.imp_file_paths["extractPath"] = extractPath;
+    let configFilePath = "";
+    //pkcs11 library installation
+    if (usecase != "gpg-signing") {
+        const pkcs11FileName = "smpkcs11.dll";
+        //Configures the pkcs#11
+        configFilePath = await (0, services_1.getConfigFilePath)(pkcs11FileName, extractPath);
+    }
+    return configFilePath;
 }
 exports.installWindowsTools = installWindowsTools;
 module.exports = { installWindowsTools };
@@ -6650,93 +6512,56 @@ module.exports = { installWindowsTools };
 
 "use strict";
 
-var __createBinding =
-  (this && this.__createBinding) ||
-  (Object.create
-    ? function (o, m, k, k2) {
-        if (k2 === undefined) k2 = k;
-        var desc = Object.getOwnPropertyDescriptor(m, k);
-        if (
-          !desc ||
-          ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)
-        ) {
-          desc = {
-            enumerable: true,
-            get: function () {
-              return m[k];
-            },
-          };
-        }
-        Object.defineProperty(o, k2, desc);
-      }
-    : function (o, m, k, k2) {
-        if (k2 === undefined) k2 = k;
-        o[k2] = m[k];
-      });
-var __setModuleDefault =
-  (this && this.__setModuleDefault) ||
-  (Object.create
-    ? function (o, v) {
-        Object.defineProperty(o, "default", { enumerable: true, value: v });
-      }
-    : function (o, v) {
-        o["default"] = v;
-      });
-var __importStar =
-  (this && this.__importStar) ||
-  function (mod) {
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null)
-      for (var k in mod)
-        if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-          __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
-  };
-var __importDefault =
-  (this && this.__importDefault) ||
-  function (mod) {
-    return mod && mod.__esModule ? mod : { default: mod };
-  };
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.runLnxToolBasedInstallationOrExtraction = void 0;
 const toolLib = __importStar(__nccwpck_require__(2423));
 const path_1 = __importDefault(__nccwpck_require__(1017));
 const services_1 = __nccwpck_require__(1968);
-async function runLnxToolBasedInstallationOrExtraction(
-  toolToBeUsed,
-  tempDirectoryPath,
-  usecase
-) {
-  let extractPath = tempDirectoryPath;
-  for (let i = 0; i < toolToBeUsed.length; i++) {
-    //initiates an API call and writes files to a specified temporary location.
-    const clientToolsDownloadPath = await (0, services_1.callApi)(
-      toolToBeUsed[i],
-      tempDirectoryPath
-    );
-    if (usecase == "" || usecase == "keypair-signing") {
-      //cheks for .zip file
-      if (toolToBeUsed[i].includes(".zip")) {
-        console.log(
-          "tool is in a zip file trying to extract it",
-          clientToolsDownloadPath
-        );
-        //extracts zip
-        await toolLib.extractZip(clientToolsDownloadPath, tempDirectoryPath);
-        extractPath = path_1.default.join(
-          tempDirectoryPath,
-          toolToBeUsed[i].replace(".zip", "")
-        );
-        console.log("zip extraction complete , path is ", extractPath);
-      }
+async function runLnxToolBasedInstallationOrExtraction(toolToBeUsed, tempDirectoryPath, usecase) {
+    let extractPath = tempDirectoryPath;
+    for (let i = 0; i < toolToBeUsed.length; i++) {
+        //initiates an API call and writes files to a specified temporary location.
+        const clientToolsDownloadPath = await (0, services_1.callApi)(toolToBeUsed[i], tempDirectoryPath);
+        if (usecase == "" || usecase == "keypair-signing") {
+            //cheks for .zip file
+            if (toolToBeUsed[i].includes(".zip")) {
+                console.log("tool is in a zip file trying to extract it", clientToolsDownloadPath);
+                //extracts zip
+                await toolLib.extractZip(clientToolsDownloadPath, tempDirectoryPath);
+                extractPath = path_1.default.join(tempDirectoryPath, toolToBeUsed[i].replace(".zip", ""));
+                console.log("zip extraction complete , path is ", extractPath);
+            }
+        }
     }
-  }
-  return extractPath;
+    return extractPath;
 }
-exports.runLnxToolBasedInstallationOrExtraction =
-  runLnxToolBasedInstallationOrExtraction;
+exports.runLnxToolBasedInstallationOrExtraction = runLnxToolBasedInstallationOrExtraction;
 
 
 /***/ }),
@@ -6746,93 +6571,53 @@ exports.runLnxToolBasedInstallationOrExtraction =
 
 "use strict";
 
-var __createBinding =
-  (this && this.__createBinding) ||
-  (Object.create
-    ? function (o, m, k, k2) {
-        if (k2 === undefined) k2 = k;
-        var desc = Object.getOwnPropertyDescriptor(m, k);
-        if (
-          !desc ||
-          ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)
-        ) {
-          desc = {
-            enumerable: true,
-            get: function () {
-              return m[k];
-            },
-          };
-        }
-        Object.defineProperty(o, k2, desc);
-      }
-    : function (o, m, k, k2) {
-        if (k2 === undefined) k2 = k;
-        o[k2] = m[k];
-      });
-var __setModuleDefault =
-  (this && this.__setModuleDefault) ||
-  (Object.create
-    ? function (o, v) {
-        Object.defineProperty(o, "default", { enumerable: true, value: v });
-      }
-    : function (o, v) {
-        o["default"] = v;
-      });
-var __importStar =
-  (this && this.__importStar) ||
-  function (mod) {
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null)
-      for (var k in mod)
-        if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-          __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
-  };
-var __importDefault =
-  (this && this.__importDefault) ||
-  function (mod) {
-    return mod && mod.__esModule ? mod : { default: mod };
-  };
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.runMacToolBasedInstallationOrExtraction = void 0;
 const toolLib = __importStar(__nccwpck_require__(2423));
 const path_1 = __importDefault(__nccwpck_require__(1017));
 const services_1 = __nccwpck_require__(1968);
-async function runMacToolBasedInstallationOrExtraction(
-  toolToBeUsed,
-  tempDirectoryPath,
-  usecase
-) {
-  let extractPath = tempDirectoryPath;
-  for (let i = 0; i < toolToBeUsed.length; i++) {
-    //initiates an API call and writes files to a specified temporary location.
-    let clientToolsDownloadPath = await (0, services_1.callApi)(
-      toolToBeUsed[i],
-      tempDirectoryPath
-    );
-    if (services_1.toolDownloaded[toolToBeUsed[i]].includes(".zip")) {
-      console.log(
-        "tool is in a zip file trying to extract it",
-        clientToolsDownloadPath
-      );
-      //extracts zip
-      await toolLib.extractZip(clientToolsDownloadPath, tempDirectoryPath);
-      clientToolsDownloadPath = path_1.default.join(
-        tempDirectoryPath,
-        services_1.toolDownloaded[toolToBeUsed[i]].replace(".zip", "")
-      );
-      console.log(
-        "zip extraction complete , path is ",
-        clientToolsDownloadPath
-      );
+async function runMacToolBasedInstallationOrExtraction(toolToBeUsed, tempDirectoryPath, usecase) {
+    let extractPath = tempDirectoryPath;
+    for (let i = 0; i < toolToBeUsed.length; i++) {
+        //initiates an API call and writes files to a specified temporary location.
+        let clientToolsDownloadPath = await (0, services_1.callApi)(toolToBeUsed[i], tempDirectoryPath);
+        if (services_1.toolDownloaded[toolToBeUsed[i]].includes(".zip")) {
+            console.log("tool is in a zip file trying to extract it", clientToolsDownloadPath);
+            //extracts zip
+            await toolLib.extractZip(clientToolsDownloadPath, tempDirectoryPath);
+            clientToolsDownloadPath = path_1.default.join(tempDirectoryPath, services_1.toolDownloaded[toolToBeUsed[i]].replace(".zip", ""));
+            console.log("zip extraction complete , path is ", clientToolsDownloadPath);
+        }
     }
-  }
-  return extractPath;
+    return extractPath;
 }
-exports.runMacToolBasedInstallationOrExtraction =
-  runMacToolBasedInstallationOrExtraction;
+exports.runMacToolBasedInstallationOrExtraction = runMacToolBasedInstallationOrExtraction;
 module.exports = { runMacToolBasedInstallationOrExtraction };
 
 
@@ -6843,125 +6628,89 @@ module.exports = { runMacToolBasedInstallationOrExtraction };
 
 "use strict";
 
-var __createBinding =
-  (this && this.__createBinding) ||
-  (Object.create
-    ? function (o, m, k, k2) {
-        if (k2 === undefined) k2 = k;
-        var desc = Object.getOwnPropertyDescriptor(m, k);
-        if (
-          !desc ||
-          ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)
-        ) {
-          desc = {
-            enumerable: true,
-            get: function () {
-              return m[k];
-            },
-          };
-        }
-        Object.defineProperty(o, k2, desc);
-      }
-    : function (o, m, k, k2) {
-        if (k2 === undefined) k2 = k;
-        o[k2] = m[k];
-      });
-var __setModuleDefault =
-  (this && this.__setModuleDefault) ||
-  (Object.create
-    ? function (o, v) {
-        Object.defineProperty(o, "default", { enumerable: true, value: v });
-      }
-    : function (o, v) {
-        o["default"] = v;
-      });
-var __importStar =
-  (this && this.__importStar) ||
-  function (mod) {
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null)
-      for (var k in mod)
-        if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-          __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
-  };
-var __importDefault =
-  (this && this.__importDefault) ||
-  function (mod) {
-    return mod && mod.__esModule ? mod : { default: mod };
-  };
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.runWinToolBasedInstallationOrExtraction = void 0;
 const path_1 = __importDefault(__nccwpck_require__(1017));
 const services_1 = __nccwpck_require__(1968);
 const tl = __importStar(__nccwpck_require__(347));
-async function runWinToolBasedInstallationOrExtraction(
-  toolToBeUsed,
-  tempDirectoryPath,
-  usecase
-) {
-  let extractPath = "";
-  for (let i = 0; i < toolToBeUsed.length; i++) {
-    //initiates an API call and writes files to a specified temporary location
-    await (0, services_1.callApi)(toolToBeUsed[i], tempDirectoryPath);
-    if (usecase == "" || usecase == "keypair-signing") {
-      //checking for .msi files
-      if (toolToBeUsed[i].includes(".msi")) {
-        extractPath = path_1.default.join(
-          tempDirectoryPath,
-          toolToBeUsed[i].replace(".msi", "")
-        );
-        //tool to run .msi file
-        const msiRunner = tl
-          .tool("msiexec")
-          .arg([
-            `/i`,
-            `${tempDirectoryPath}\\${toolToBeUsed}`,
-            "/quiet",
-            `INSTALLDIR=${extractPath}`,
-          ]);
-        const regReturnCode = await msiRunner.exec();
-        //Please provide admin privileges if the regReturnCode is 1625-30
-        if (regReturnCode != 0) {
-          throw new Error(
-            `Installation of msi failed with return code ${regReturnCode}`
-          );
+async function runWinToolBasedInstallationOrExtraction(toolToBeUsed, tempDirectoryPath, usecase) {
+    let extractPath = "";
+    for (let i = 0; i < toolToBeUsed.length; i++) {
+        //initiates an API call and writes files to a specified temporary location
+        await (0, services_1.callApi)(toolToBeUsed[i], tempDirectoryPath);
+        if (usecase == "" || usecase == "keypair-signing") {
+            //checking for .msi files
+            if (toolToBeUsed[i].includes(".msi")) {
+                extractPath = path_1.default.join(tempDirectoryPath, toolToBeUsed[i].replace(".msi", ""));
+                //tool to run .msi file
+                const msiRunner = tl
+                    .tool("msiexec")
+                    .arg([
+                    `/i`,
+                    `${tempDirectoryPath}\\${toolToBeUsed}`,
+                    "/quiet",
+                    `INSTALLDIR=${extractPath}`,
+                ]);
+                const regReturnCode = await msiRunner.exec();
+                //Please provide admin privileges if the regReturnCode is 1625-30
+                if (regReturnCode != 0) {
+                    throw new Error(`Installation of msi failed with return code ${regReturnCode}`);
+                }
+                console.log("installation of smctl returned code", regReturnCode);
+            }
+            if (!shouldCheckIfToolsInstalled()) {
+                //tool for locating installations Where the installation is already in place
+                const installationLocation = tl
+                    .tool("wmic")
+                    .arg([
+                    "product",
+                    "where",
+                    "Vendor='DigiCert Inc.' and name='DigiCert One Signing Manager Tools'",
+                    "get",
+                    "installlocation",
+                    "/format:list",
+                ])
+                    .execSync();
+                const { stdout } = installationLocation;
+                extractPath = stdout.split("=")[1].trim();
+            }
         }
-        console.log("installation of smctl returned code", regReturnCode);
-      }
-      if (!shouldCheckIfToolsInstalled()) {
-        //tool for locating installations Where the installation is already in place
-        const installationLocation = tl
-          .tool("wmic")
-          .arg([
-            "product",
-            "where",
-            "Vendor='DigiCert Inc.' and name='DigiCert One Signing Manager Tools'",
-            "get",
-            "installlocation",
-            "/format:list",
-          ])
-          .execSync();
-        const { stdout } = installationLocation;
-        extractPath = stdout.split("=")[1].trim();
-      }
     }
-  }
-  return extractPath;
+    return extractPath;
 }
-exports.runWinToolBasedInstallationOrExtraction =
-  runWinToolBasedInstallationOrExtraction;
+exports.runWinToolBasedInstallationOrExtraction = runWinToolBasedInstallationOrExtraction;
 //will be false in the hosted environment because it makes no sense to look for what we just extracted
 //If an installation already exists in a self-hosted environment, this is true
 const shouldCheckIfToolsInstalled = () => {
-  return process.env.SHOULD_CHECK_INSTALLED == "false";
+    return process.env.SHOULD_CHECK_INSTALLED == "false";
 };
-module.exports = {
-  runWinToolBasedInstallationOrExtraction,
-  getAPICall: services_1.getAPICall,
-};
+module.exports = { runWinToolBasedInstallationOrExtraction, getAPICall: services_1.getAPICall };
 
 
 /***/ }),
@@ -6971,19 +6720,16 @@ module.exports = {
 
 "use strict";
 
-var __importDefault =
-  (this && this.__importDefault) ||
-  function (mod) {
-    return mod && mod.__esModule ? mod : { default: mod };
-  };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getTempDirectory = void 0;
 const path_1 = __importDefault(__nccwpck_require__(1017));
 const os_1 = __importDefault(__nccwpck_require__(2037));
-const getTempDirectory = () =>
-  (process.env.AGENT_WORKFOLDER &&
+const getTempDirectory = () => (process.env.AGENT_WORKFOLDER &&
     path_1.default.join(process.env.AGENT_WORKFOLDER, "_temp")) ||
-  os_1.default.tmpdir();
+    os_1.default.tmpdir();
 exports.getTempDirectory = getTempDirectory;
 module.exports = { getTempDirectory: exports.getTempDirectory };
 
@@ -6995,154 +6741,102 @@ module.exports = { getTempDirectory: exports.getTempDirectory };
 
 "use strict";
 
-var __createBinding =
-  (this && this.__createBinding) ||
-  (Object.create
-    ? function (o, m, k, k2) {
-        if (k2 === undefined) k2 = k;
-        var desc = Object.getOwnPropertyDescriptor(m, k);
-        if (
-          !desc ||
-          ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)
-        ) {
-          desc = {
-            enumerable: true,
-            get: function () {
-              return m[k];
-            },
-          };
-        }
-        Object.defineProperty(o, k2, desc);
-      }
-    : function (o, m, k, k2) {
-        if (k2 === undefined) k2 = k;
-        o[k2] = m[k];
-      });
-var __setModuleDefault =
-  (this && this.__setModuleDefault) ||
-  (Object.create
-    ? function (o, v) {
-        Object.defineProperty(o, "default", { enumerable: true, value: v });
-      }
-    : function (o, v) {
-        o["default"] = v;
-      });
-var __importStar =
-  (this && this.__importStar) ||
-  function (mod) {
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null)
-      for (var k in mod)
-        if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k))
-          __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
-  };
-var __importDefault =
-  (this && this.__importDefault) ||
-  function (mod) {
-    return mod && mod.__esModule ? mod : { default: mod };
-  };
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.callApi =
-  exports.toolDownloaded =
-  exports.getConfigFilePath =
-  exports.getAPICall =
-  exports.uiAPIPrefix =
-    void 0;
+exports.callApi = exports.toolDownloaded = exports.getConfigFilePath = exports.getAPICall = exports.uiAPIPrefix = void 0;
 const axios_1 = __importDefault(__nccwpck_require__(1056));
 const tl = __importStar(__nccwpck_require__(347));
 const path_1 = __importDefault(__nccwpck_require__(1017));
 const fs_1 = __importDefault(__nccwpck_require__(7147));
 const getHost = () => {
-  return "https://demo.one.digicert.com";
+    return "https://demo.one.digicert.com";
 };
 exports.uiAPIPrefix = "signingmanager/api-ui/v1";
 const getAPICall = async (uri, config) => {
-  const apiKey = extractAndValidateApiKey();
-  const options = {
-    ...config,
-  };
-  if (apiKey) {
-    options.headers = {
-      "x-api-key": apiKey,
+    const apiKey = extractAndValidateApiKey();
+    const options = {
+        ...config,
     };
-  }
-  const host = getHost();
-  const response = await axios_1.default.get(`${host}/${uri}`, options);
-  return response.data || [];
+    if (apiKey) {
+        options.headers = {
+            "x-api-key": apiKey,
+        };
+    }
+    const host = getHost();
+    const response = await axios_1.default.get(`${host}/${uri}`, options);
+    return response.data || [];
 };
 exports.getAPICall = getAPICall;
 function extractAndValidateApiKey() {
-  return tl.getInput("APIKey", false) || process.env.SM_API_KEY;
+    return tl.getInput("APIKey", false) || process.env.SM_API_KEY;
 }
 const getConfigFilePath = async (pkcs11FileName, extractPath) => {
-  const configFilePath = path_1.default.join(
-    extractPath,
-    "pkcs11properties.cfg"
-  );
-  console.info(
-    "The pkcs11 library path set is ",
-    path_1.default.join(extractPath, pkcs11FileName),
-    "and config file path is ",
-    configFilePath
-  );
-  fs_1.default.writeFileSync(
-    configFilePath,
-    `name=signingmanager\r\nlibrary=${path_1.default.join(
-      extractPath,
-      pkcs11FileName
-    )}\r\nslotListIndex=0`
-  );
-  return configFilePath;
+    const configFilePath = path_1.default.join(extractPath, "pkcs11properties.cfg");
+    console.info("The pkcs11 library path set is ", path_1.default.join(extractPath, pkcs11FileName), "and config file path is ", configFilePath);
+    fs_1.default.writeFileSync(configFilePath, `name=signingmanager\r\nlibrary=${path_1.default.join(extractPath, pkcs11FileName)}\r\nslotListIndex=0`);
+    return configFilePath;
 };
 exports.getConfigFilePath = getConfigFilePath;
 exports.toolDownloaded = {
-  "ssm-scd-windows-x64": "ssm-scd.exe",
-  "smpkcs11-windows-x64": "smpkcs11.dll",
-  "smksp-windows-x86": "smksp-x86.dll",
-  "smksp-windows-x64": "smksp-x64.dll",
-  "smctl-windows-x64": "smctl.exe",
-  "smtools-windows-x64.msi": "smtools-windows-x64.msi",
-  "smtools-linux-x64.zip": "smtools-linux-x64.zip",
-  "smpkcs11-linux-x64": "smpkcs11.dll",
-  "smctl-linux-x64": "smctl",
-  "ssm-scd-linux-x64": "ssm-scd",
-  "smctk-apple-any": "smtools-mac-x64.zip",
-  "smctl-mac-x64": "smctl",
-  "smpkcs11-mac-x64": "smpkcs11.dmg",
-  "ssm-scd-mac-x64": "ssm-scd.dmg",
+    "ssm-scd-windows-x64": "ssm-scd.exe",
+    "smpkcs11-windows-x64": "smpkcs11.dll",
+    "smksp-windows-x86": "smksp-x86.dll",
+    "smksp-windows-x64": "smksp-x64.dll",
+    "smctl-windows-x64": "smctl.exe",
+    "smtools-windows-x64.msi": "smtools-windows-x64.msi",
+    "smtools-linux-x64.zip": "smtools-linux-x64.zip",
+    "smpkcs11-linux-x64": "smpkcs11.dll",
+    "smctl-linux-x64": "smctl",
+    "ssm-scd-linux-x64": "ssm-scd",
+    "smctk-apple-any": "smtools-mac-x64.zip",
+    "smctl-mac-x64": "smctl",
+    "smpkcs11-mac-x64": "smpkcs11.dmg",
+    "ssm-scd-mac-x64": "ssm-scd.dmg",
 };
 const callApi = async (toolToBeUsed, getTempDirectoryPath) => {
-  const urlToDownloadTool = `${exports.uiAPIPrefix}/releases/noauth/${toolToBeUsed}/download`;
-  console.log(
-    "Tool to be downloaded and used {} and url is {}",
-    toolToBeUsed,
-    urlToDownloadTool
-  );
-  const toolFileData = await (0, exports.getAPICall)(urlToDownloadTool, {
-    responseType: "arraybuffer",
-  });
-  //file writing part
-  const clientToolsDownloadPath = path_1.default.join(
-    getTempDirectoryPath,
-    exports.toolDownloaded[toolToBeUsed]
-  );
-  fs_1.default.writeFileSync(clientToolsDownloadPath, toolFileData);
-  console.log(
-    "file after write ",
-    fs_1.default.statSync(clientToolsDownloadPath).size
-  );
-  return clientToolsDownloadPath;
+    const urlToDownloadTool = `${exports.uiAPIPrefix}/releases/noauth/${toolToBeUsed}/download`;
+    console.log("Tool to be downloaded and used {} and url is {}", toolToBeUsed, urlToDownloadTool);
+    const toolFileData = await (0, exports.getAPICall)(urlToDownloadTool, {
+        responseType: "arraybuffer",
+    });
+    //file writing part
+    const clientToolsDownloadPath = path_1.default.join(getTempDirectoryPath, exports.toolDownloaded[toolToBeUsed]);
+    fs_1.default.writeFileSync(clientToolsDownloadPath, toolFileData);
+    console.log("file after write ", fs_1.default.statSync(clientToolsDownloadPath).size);
+    return clientToolsDownloadPath;
 };
 exports.callApi = callApi;
 module.exports = {
-  getAPICall: exports.getAPICall,
-  getConfigFilePath: exports.getConfigFilePath,
-  callApi: exports.callApi,
-  extractAndValidateApiKey,
-  toolDownloaded: exports.toolDownloaded,
+    getAPICall: exports.getAPICall,
+    getConfigFilePath: exports.getConfigFilePath,
+    callApi: exports.callApi,
+    extractAndValidateApiKey,
+    toolDownloaded: exports.toolDownloaded,
 };
 
 
